@@ -1,4 +1,3 @@
-// https://interestingengineering.com/computer-engineering-salaries-state-by-state
 // https://github.com/d3/d3-scale-chromatic
 // https://www.indeed.com/salaries/Computer-Science-Salaries
 var dataP = d3.json('us-states.json').then(function(data){
