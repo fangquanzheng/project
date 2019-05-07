@@ -61,13 +61,14 @@ var drawMap = function(data) {
     var highColor = '#ff7e00'
     var key = d3.select("svg")
         .append("g")
+        .attr("id","legend1")
         .attr("width", w)
         .attr("height", h)
         .attr("class", "legend");
 
     var legend = key.append("defs")
         .append("g:linearGradient")
-        .attr("id", "gradient")
+        .attr("id", "gradient1")
         .attr("x1", "100%")
         .attr("y1", "0%")
         .attr("x2", "100%")
@@ -87,7 +88,7 @@ var drawMap = function(data) {
     key.append("rect")
         .attr("width", w - 100)
         .attr("height", h)
-        .style("fill", "url(#gradient)")
+        .style("fill", "url(#gradient1)")
         .attr("transform", "translate(20,25)");
 
     var y = d3.scaleLinear()
@@ -111,7 +112,7 @@ var drawHappy = function(data) {
         .attr("width", screen.width)
         .attr("height", screen.height);
     var path = d3.geoPath().projection(d3.geoAlbersUsa());
-    var color = d3.scaleOrdinal().domain([30, 70]).range(["#ffbd6e", "#ffb761", "#ffb154", "#feaa47", "#fea439", "#fe9f30", "#fe9927", "#fe941c", "#fe8f16", "#fe890f", "#ff8407", "#ff7e00"]);
+    var color = d3.scaleOrdinal().domain([30, 70]).range(["#ddc4fe", "#d6bdfe","#cfb6fe","#c7affe","#bea9fe","#b099f4","#a189ea","#937ae0","#7c5ec8", "#6642b1", "#502699", "#3a0082"]);
     var features = data.features;
     color.domain([
         d3.min(features, function(d) {
@@ -154,17 +155,18 @@ var drawHappy = function(data) {
     var w = 140,
         h = 300;
 
-    var lowColor = '#ffbd6e'
-    var highColor = '#ff7e00'
-    var key = d3.select("svg")
+    var lowColor = "#ddc4fe"
+    var highColor = "#3a0082"
+    var key = d3.select("#happy")
         .append("g")
+        .attr("id","legend2")
         .attr("width", w)
         .attr("height", h)
         .attr("class", "legend");
 
     var legend = key.append("defs")
         .append("g:linearGradient")
-        .attr("id", "gradient")
+        .attr("id", "gradient2")
         .attr("x1", "100%")
         .attr("y1", "0%")
         .attr("x2", "100%")
@@ -174,22 +176,22 @@ var drawHappy = function(data) {
     legend.append("stop")
         .attr("offset", "0%")
         .attr("stop-color", highColor)
-        .attr("stop-opacity", 0.9);
+        .attr("stop-opacity", 1);
 
     legend.append("stop")
         .attr("offset", "100%")
         .attr("stop-color", lowColor)
-        .attr("stop-opacity", 0.9);
+        .attr("stop-opacity", 1);
 
     key.append("rect")
         .attr("width", w - 100)
         .attr("height", h)
-        .style("fill", "url(#gradient)")
+        .style("fill", "url(#gradient2)")
         .attr("transform", "translate(20,25)");
 
     var y = d3.scaleLinear()
         .range([h, 0])
-        .domain([60000, 130000]);
+        .domain([30, 70]);
 
     var yAxis = d3.axisRight(y);
 
@@ -206,6 +208,10 @@ var changeGeoMap = function() {
             .attr("display", "none");
         var svg = d3.select("#happy")
             .attr("display", "block");
+              d3.select("#legend2")
+            .attr("display", "block");
+             d3.select("#gradient2")
+            .attr("display", "block");
         var svg = d3.select("#bar")
             .attr("display", "none");
         isSalaryMap = 2;
@@ -219,6 +225,10 @@ var changeGeoMap = function() {
         isSalaryMap = 3;
     } else {
         var svg = d3.select("#map")
+            .attr("display", "block");
+            d3.select("#legend1")
+            .attr("display", "block");
+             d3.select("#gradient1")
             .attr("display", "block");
         var svg = d3.select("#happy")
             .attr("display", "none");
