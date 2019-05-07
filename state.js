@@ -239,17 +239,13 @@ var changeGeoMap = function() {
 }
 var drawBar = function(data) {
     console.log(data);
-    // var screen = {
-    //     width: 850,
-    //     height: 650
-    // }
     var margin = {
-        top: 20,
-        bottom: 20,
-        left: 30,
+        top: 50,
+        bottom: 80,
+        left: 40,
         right: 80,
     }
-    var width = 850;
+    var width = 1000;
     var height = 650;
     var chartW = width - margin.left - margin.right;
     var chartH = height - margin.top - margin.bottom;
