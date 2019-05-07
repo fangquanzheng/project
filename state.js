@@ -241,7 +241,7 @@ var drawBar = function(data) {
     console.log(data);
     var margin = {
         top: 50,
-        bottom: 80,
+        bottom: 60,
         left: 40,
         right: 80,
     }
@@ -251,8 +251,8 @@ var drawBar = function(data) {
     var chartH = height - margin.top - margin.bottom;
     var padding = 5;
     var svg = d3.select("#bar")
-        .attr("width", width)
-        .attr("height", height);
+        .attr("width", chartW)
+        .attr("height", chartH);
     var barPadding = 5;
     var barWidth = (width / data.length);
     var xScale = d3.scaleLinear()
@@ -263,10 +263,10 @@ var drawBar = function(data) {
         .domain(xScale.domain())
         .thresholds(xScale.ticks(data.length));
     var populations = data.map(function(d) {
-        return d["Total Population"];
+        return d["share"];
     })
-    var bins = binMaker(populations);
-    var max = d3.max(populations);
+    var bins = binMaker(share);
+    var max = d3.max(share);
     var yScale = d3.scaleLinear()
         .domain([0, max])
         .range([chartH, 0])
@@ -287,11 +287,11 @@ var drawBar = function(data) {
             return i * (width / data.length);
         })
         .attr("y", function(d) {
-            return yScale(d["Total Population"]);
+            return yScale(d["share"]);
         })
         .attr("width", chartW / data.length)
         .attr("height", function(d) {
-            console.log(yScale(d["Total Population"]));
-            return chartH - yScale(d["Total Population"]);
+            console.log(yScale(d["share"]));
+            return chartH - yScale(d["share"]);
         })
 }
