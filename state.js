@@ -14,7 +14,7 @@ var drawMap = function(data) {
         .attr("width", screen.width)
         .attr("height", screen.height);
     var path = d3.geoPath().projection(d3.geoAlbersUsa());
-  var color = d3.scaleOrdinal().domain([60000,130000]).range(["#ffbd6e", "#ffb761","#ffb154","#feaa47","#fea439","#fe9f30","#fe9927","#fe941c","#fe8f16","#fe890f","#ff8407","#ff7e00"]);
+    var color = d3.scaleOrdinal().domain([60000, 130000]).range(["#ffbd6e", "#ffb761", "#ffb154", "#feaa47", "#fea439", "#fe9f30", "#fe9927", "#fe941c", "#fe8f16", "#fe890f", "#ff8407", "#ff7e00"]);
     var features = data.features;
     color.domain([
         d3.min(features, function(d) {
@@ -38,7 +38,7 @@ var drawMap = function(data) {
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY) + "px")
                 .select("#value")
-                .text("State: " +d.properties.name + " Salary : " + d.properties.salary)
+                .text("State: " + d.properties.name + " Salary : " + d.properties.salary)
             d3.select("#tooltip").classed("hidden", false);
         })
         .style("fill", function(d) {
@@ -54,52 +54,53 @@ var drawMap = function(data) {
             d3.select("#tooltip").classed("hidden", true);
         })
         .attr("d", path);
-        var w = 140, h = 300;
+    var w = 140,
+        h = 300;
 
-var lowColor = '#ffbd6e'
-var highColor = '#ff7e00'
-        var key = d3.select("svg")
-            .append("g")
-            .attr("width", w)
-            .attr("height", h)
-            .attr("class", "legend");
+    var lowColor = '#ffbd6e'
+    var highColor = '#ff7e00'
+    var key = d3.select("svg")
+        .append("g")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("class", "legend");
 
-        var legend = key.append("defs")
-            .append("g:linearGradient")
-            .attr("id", "gradient")
-            .attr("x1", "100%")
-            .attr("y1", "0%")
-            .attr("x2", "100%")
-            .attr("y2", "100%")
-            .attr("spreadMethod", "pad");
+    var legend = key.append("defs")
+        .append("g:linearGradient")
+        .attr("id", "gradient")
+        .attr("x1", "100%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "100%")
+        .attr("spreadMethod", "pad");
 
-        legend.append("stop")
-            .attr("offset", "0%")
-            .attr("stop-color", highColor)
-            .attr("stop-opacity", 0.9);
-            
-        legend.append("stop")
-            .attr("offset", "100%")
-            .attr("stop-color", lowColor)
-            .attr("stop-opacity", 0.9);
+    legend.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", highColor)
+        .attr("stop-opacity", 0.9);
 
-        key.append("rect")
-            .attr("width", w - 100)
-            .attr("height", h)
-            .style("fill", "url(#gradient)")
-            .attr("transform", "translate(20,25)");
+    legend.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", lowColor)
+        .attr("stop-opacity", 0.9);
 
-        var y = d3.scaleLinear()
-            .range([h, 0])
-            .domain([60000, 130000]);
+    key.append("rect")
+        .attr("width", w - 100)
+        .attr("height", h)
+        .style("fill", "url(#gradient)")
+        .attr("transform", "translate(20,25)");
 
-        var yAxis = d3.axisRight(y);
+    var y = d3.scaleLinear()
+        .range([h, 0])
+        .domain([60000, 130000]);
 
-        key.append("g")
-            .attr("class", "y axis")
-            .attr("transform", "translate(60,25)")
-            .attr("opacity",0.7)
-            .call(yAxis)
+    var yAxis = d3.axisRight(y);
+
+    key.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(60,25)")
+        .attr("opacity", 0.7)
+        .call(yAxis)
 }
 var drawHappy = function(data) {
     var screen = {
@@ -110,7 +111,7 @@ var drawHappy = function(data) {
         .attr("width", screen.width)
         .attr("height", screen.height);
     var path = d3.geoPath().projection(d3.geoAlbersUsa());
-    var color = d3.scaleOrdinal().domain([30,70]).range(["#ffbd6e", "#ffb761","#ffb154","#feaa47","#fea439","#fe9f30","#fe9927","#fe941c","#fe8f16","#fe890f","#ff8407","#ff7e00"]);
+    var color = d3.scaleOrdinal().domain([30, 70]).range(["#ffbd6e", "#ffb761", "#ffb154", "#feaa47", "#fea439", "#fe9f30", "#fe9927", "#fe941c", "#fe8f16", "#fe890f", "#ff8407", "#ff7e00"]);
     var features = data.features;
     color.domain([
         d3.min(features, function(d) {
@@ -134,7 +135,7 @@ var drawHappy = function(data) {
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY) + "px")
                 .select("#value")
-                .text("State: " +d.properties.name + " Happinese Index: " + d.properties.happy)
+                .text("State: " + d.properties.name + " Happinese Index: " + d.properties.happy)
             d3.select("#tooltip").classed("hidden", false);
         })
         .style("fill", function(d) {
@@ -150,52 +151,53 @@ var drawHappy = function(data) {
             d3.select("#tooltip").classed("hidden", true);
         })
         .attr("d", path);
-        var w = 140, h = 300;
+    var w = 140,
+        h = 300;
 
-        var lowColor = '#ffbd6e'
-var highColor = '#ff7e00'
-        var key = d3.select("svg")
-            .append("g")
-            .attr("width", w)
-            .attr("height", h)
-            .attr("class", "legend");
+    var lowColor = '#ffbd6e'
+    var highColor = '#ff7e00'
+    var key = d3.select("svg")
+        .append("g")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("class", "legend");
 
-        var legend = key.append("defs")
-            .append("g:linearGradient")
-            .attr("id", "gradient")
-            .attr("x1", "100%")
-            .attr("y1", "0%")
-            .attr("x2", "100%")
-            .attr("y2", "100%")
-            .attr("spreadMethod", "pad");
+    var legend = key.append("defs")
+        .append("g:linearGradient")
+        .attr("id", "gradient")
+        .attr("x1", "100%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "100%")
+        .attr("spreadMethod", "pad");
 
-        legend.append("stop")
-            .attr("offset", "0%")
-            .attr("stop-color", highColor)
-            .attr("stop-opacity", 0.9);
-            
-        legend.append("stop")
-            .attr("offset", "100%")
-            .attr("stop-color", lowColor)
-            .attr("stop-opacity", 0.9);
+    legend.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", highColor)
+        .attr("stop-opacity", 0.9);
 
-        key.append("rect")
-            .attr("width", w - 100)
-            .attr("height", h)
-            .style("fill", "url(#gradient)")
-            .attr("transform", "translate(20,25)");
+    legend.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", lowColor)
+        .attr("stop-opacity", 0.9);
 
-        var y = d3.scaleLinear()
-            .range([h, 0])
-            .domain([60000, 130000]);
+    key.append("rect")
+        .attr("width", w - 100)
+        .attr("height", h)
+        .style("fill", "url(#gradient)")
+        .attr("transform", "translate(20,25)");
 
-        var yAxis = d3.axisRight(y);
+    var y = d3.scaleLinear()
+        .range([h, 0])
+        .domain([60000, 130000]);
 
-        key.append("g")
-            .attr("class", "y axis")
-            .attr("transform", "translate(60,25)")
-            .attr("opacity",0.7)
-            .call(yAxis)
+    var yAxis = d3.axisRight(y);
+
+    key.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(60,25)")
+        .attr("opacity", 0.7)
+        .call(yAxis)
 }
 isSalaryMap = 1;
 var changeGeoMap = function() {
@@ -232,12 +234,12 @@ var drawBar = function(data) {
     //     height: 650
     // }
     var margin = {
-        top:20,
-        bottom:20,
-        left:30,
-        right:80,
+        top: 20,
+        bottom: 20,
+        left: 30,
+        right: 80,
     }
-    var width = 850; 
+    var width = 850;
     var height = 650;
     var chartW = width - margin.left - margin.right;
     var chartH = height - margin.top - margin.bottom;
@@ -255,7 +257,7 @@ var drawBar = function(data) {
         .domain(xScale.domain())
         .thresholds(xScale.ticks(data.length));
     var populations = data.map(function(d) {
-         return d["Total Population"];
+        return d["Total Population"];
     })
     var bins = binMaker(populations);
     var max = d3.max(populations);
