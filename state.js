@@ -1,3 +1,4 @@
+
 var dataP = d3.json('us-states.json').then(function(data) {
     drawMap(data);
     drawHappy(data);
@@ -35,11 +36,15 @@ var drawMap = function(data) {
         .on("mouseover", function(d) {
 
             d3.select("#tooltip")
+                .style("visibility", "visible")
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY) + "px")
+                .style("text-align", "left")
+                .select("#state")
+                .text("State: " + d.properties.name);
+            d3.select("#tooltip")
                 .select("#value")
-                .text("State: " + d.properties.name + " Salary : " + d.properties.salary)
-            d3.select("#tooltip").classed("hidden", false);
+                .text("Salary: " + d.properties.salary)
         })
         .style("fill", function(d) {
             //GET VALUE
@@ -51,7 +56,7 @@ var drawMap = function(data) {
             }
         })
         .on("mouseout", function(d, i) {
-            d3.select("#tooltip").classed("hidden", true);
+            d3.select("#tooltip").style("visibility", "hidden")
         })
         .attr("d", path);
     var w = 140,
@@ -133,11 +138,14 @@ var drawHappy = function(data) {
         .on("mouseover", function(d) {
 
             d3.select("#tooltip")
+                .style("visibility", "visible")
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY) + "px")
+                .select("#state")
+                .text("State: " + d.properties.name);
+            d3.select("#tooltip")
                 .select("#value")
-                .text("State: " + d.properties.name + " Happinese Index: " + d.properties.happy)
-            d3.select("#tooltip").classed("hidden", false);
+                .text("Happiness Index: " + d.properties.happy);
         })
         .style("fill", function(d) {
             //GET VALUE
@@ -149,7 +157,7 @@ var drawHappy = function(data) {
             }
         })
         .on("mouseout", function(d, i) {
-            d3.select("#tooltip").classed("hidden", true);
+            d3.select("#tooltip").style("visibility", "hidden");
         })
         .attr("d", path);
     var w = 140,
@@ -236,23 +244,29 @@ var changeGeoMap = function() {
             .attr("display", "none");
         isSalaryMap = 1
     }
+    d3.select("#barTooltip").style("visibility", "hidden");
+    d3.select("#tooltip").style("visibility", "hidden");
 }
 var drawBar = function(data) {
     console.log(data);
+    // var screen = {
+    //     width: 850,
+    //     height: 650
+    // }
     var margin = {
-        top: 50,
-        bottom: 60,
-        left: 40,
+        top: 20,
+        bottom: 20,
+        left: 30,
         right: 80,
     }
-    var width = 1000;
+    var width = 850;
     var height = 650;
     var chartW = width - margin.left - margin.right;
     var chartH = height - margin.top - margin.bottom;
     var padding = 5;
     var svg = d3.select("#bar")
-        .attr("width", chartW)
-        .attr("height", chartH);
+        .attr("width", width)
+        .attr("height", height);
     var barPadding = 5;
     var barWidth = (width / data.length);
     var xScale = d3.scaleLinear()
@@ -265,8 +279,8 @@ var drawBar = function(data) {
     var populations = data.map(function(d) {
         return d["share"];
     })
-    var bins = binMaker(share);
-    var max = d3.max(share);
+    var bins = binMaker(populations);
+    var max = d3.max(populations);
     var yScale = d3.scaleLinear()
         .domain([0, max])
         .range([chartH, 0])
@@ -283,8 +297,7 @@ var drawBar = function(data) {
             return colors(d);
         })
         .attr("x", function(d, i) {
-            //console.log(d["Total Population"]);
-            return i * (width / data.length);
+            return 35 + i * ((chartW - 35) / data.length);
         })
         .attr("y", function(d) {
             return yScale(d["share"]);
@@ -294,4 +307,46 @@ var drawBar = function(data) {
             console.log(yScale(d["share"]));
             return chartH - yScale(d["share"]);
         })
+        .on("mouseover", function(d, i) {
+            d3.select("#barTooltip")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY) + "px")
+                .style("text-align", "left")
+                .select("#population")
+                .text("Population: " + d["Total Population"]);
+            d3.select("#barTooltip")
+                .select("#share")
+                .text("Share: " + (d["share"] * 100).toFixed(2) + "%");
+            if (i % 2 == 0) {
+                d3.select("#barTooltip")
+                    .select("#type")
+                    .text("USA");
+            } else {
+                d3.select("#barTooltip")
+                    .select("#type")
+                    .text("Computer, engineering, & science occupations");
+            }
+            d3.select("#barTooltip")
+                    .select("#wage")
+                    .text("Wage: " + d["Wage Bin"]);
+            
+            d3.select("#barTooltip").style("visibility", "visible");
+        })
+        .on("mouseout", function(d, i) {
+            d3.select("#barTooltip").style("visibility", "hidden");
+        });
+
+    var yAxis=d3.axisLeft(yScale)
+    svg.append("g")
+    .attr('id', 'yAxis')
+    .call(yAxis)
+    .attr('transform', 'translate(' + 35 + ',' + 0 + ')')
+
+    var xAxis=d3.axisBottom(xScale)
+                            .ticks(0)
+                            
+    svg.append("g")
+    .attr('id', 'xAxis')
+    .call(xAxis)
+    .attr('transform', 'translate(' + 35 + ',' + chartH + ')')
 }
